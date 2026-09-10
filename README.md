@@ -42,7 +42,19 @@ REFUSING TO SEARCH: recomputed root does not match the checkpoint.
   checkpoint w4EgQfjRRVBy+JSSs8o4H2M0IEMJHeJ0msSDjHhu7Bg=
 ```
 
-Exit is 0 on a verified search, 1 if the log signature is missing, 2 on a refusal.
+It also refuses a checkpoint it cannot hold to a standard: no valid log
+signature, no witness quorum stated in the trust root, or fewer verified
+independent cosignatures than that quorum.
+
+```
+REFUSING TO SEARCH: 1 independent witness cosignature(s), quorum is 4.
+A tree only one party vouches for cannot tell you what is absent from it.
+```
+
+Cosignatures from keys the signed trust root does not name are reported and
+never counted toward the quorum.
+
+Exit is 0 on a verified search and 2 on any refusal.
 
 ## Use
 

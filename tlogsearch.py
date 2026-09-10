@@ -202,7 +202,29 @@ def main():
         return 2
 
     # 3. Is that checkpoint signed, and cosigned by enough independent witnesses?
+    #
+    # These are refusals, not warnings. An earlier version of this tool printed
+    # the cosignature count and searched anyway, which made it looser than
+    # verify_export.py in the same bundle -- two tools, two standards, and the
+    # weaker one answering questions about absence.
     v = verify_checkpoint(export, body, sigs, origin)
+    if not v["log"]:
+        print("REFUSING TO SEARCH: the checkpoint carries no valid log signature.")
+        return 2
+    if v["quorum"] is None:
+        print("REFUSING TO SEARCH: the trust root states no witness quorum, so "
+              "there is no threshold to hold this checkpoint to.")
+        return 2
+    if len(v["witnesses"]) < v["quorum"]:
+        print("REFUSING TO SEARCH: %d independent witness cosignature(s), quorum "
+              "is %d." % (len(v["witnesses"]), v["quorum"]))
+        print("A tree only one party vouches for cannot tell you what is absent "
+              "from it.")
+        if v["advisory"]:
+            print("(%d cosignature(s) verify but are not named by the signed trust "
+                  "root, so they do not count: %s)"
+                  % (len(v["advisory"]), ", ".join(sorted(v["advisory"]))))
+        return 2
 
     hits = [(i, d) for i, d in leaves if matches(d, args)]
     shown = hits if args.limit == 0 else hits[:args.limit]
@@ -219,10 +241,9 @@ def main():
     print("%d match%s in %d leaves." % (len(hits), "" if len(hits) == 1 else "es", size))
     print("Searched every leaf committed by root %s, recomputed here from the leaves"
           % root_b64[:16] + "...")
-    print("themselves. Log signature %s. %d independent witness cosignature(s) verify%s."
-          % ("verifies" if v["log"] else "MISSING",
-             len(v["witnesses"]),
-             "" if v["quorum"] is None else ", quorum %s" % v["quorum"]))
+    print("themselves. Log signature verifies. %d independent witness "
+          "cosignature(s) verify, quorum %d."
+          % (len(v["witnesses"]), v["quorum"]))
     if v["advisory"]:
         print("(%d cosignature(s) verify but are not named by the signed trust root, "
               "excluded: %s)" % (len(v["advisory"]), ", ".join(sorted(v["advisory"]))))
@@ -235,7 +256,7 @@ def main():
     print("log ever served a different tree to someone else. The first is not a "
           "log's job.")
     print("The second is what the witness cosignatures above are for.")
-    return 0 if v["log"] else 1
+    return 0
 
 
 if __name__ == "__main__":
