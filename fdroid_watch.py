@@ -49,9 +49,26 @@ ARTIFACTS = [
     ("f-droid.org/repo/entry.jar", "https://f-droid.org/repo/entry.jar"),
     ("f-droid.org/repo/index-v2.json", "https://f-droid.org/repo/index-v2.json"),
 ]
+# Each log and the artifacts it actually covers. The pairing matters: an early
+# version of this file paired f-droid.org's index with guardianproject's log,
+# which is the log for guardianproject.info/fdroid -- a different repository.
+# A record that pairs the wrong two things is worse than no record.
 BTLOGS = [
-    ("guardianproject/binary_transparency_log",
-     "repos/guardianproject/binary_transparency_log/commits"),
+    # canonical log for the f-droid.org repo, on GitLab
+    ("fdroid/f-droid.org-transparency-log", "gitlab",
+     "https://gitlab.com/api/v4/projects/fdroid%2Ff-droid.org-transparency-log"
+     "/repository/commits?per_page=1"),
+    # guardianproject.info/fdroid -- a different app repo, its own log
+    ("guardianproject/binary_transparency_log", "github",
+     "https://api.github.com/repos/guardianproject/binary_transparency_log"
+     "/commits?per_page=1"),
+    # these two log third-party binaries: Google's Android SDK, and Gradle
+    ("f-droid/android-sdk-transparency-log", "github",
+     "https://api.github.com/repos/f-droid/android-sdk-transparency-log"
+     "/commits?per_page=1"),
+    ("f-droid/gradle-transparency-log", "github",
+     "https://api.github.com/repos/f-droid/gradle-transparency-log"
+     "/commits?per_page=1"),
 ]
 
 
@@ -73,16 +90,16 @@ def fetch(url, expect_length=True):
     return body
 
 
-def btlog_head(api_path):
-    """Unauthenticated GitHub API. 60 requests/hour is ample for a daily run,
-    and it keeps this stdlib-only rather than depending on the gh CLI."""
+def btlog_head(url, host):
+    """Head commit of a log. Unauthenticated on both hosts; one call a day each."""
     try:
-        c = json.loads(fetch("https://api.github.com/" + api_path + "?per_page=1",
-                             expect_length=False))
+        c = json.loads(fetch(url, expect_length=False))
     except Exception:
         return None
     if not c:
         return None
+    if host == "gitlab":
+        return {"sha": c[0]["id"], "date": c[0]["committed_date"]}
     return {"sha": c[0]["sha"], "date": c[0]["commit"]["committer"]["date"]}
 
 
@@ -92,8 +109,8 @@ def observe():
         b = fetch(url)
         out["artifacts"][name] = {"sha256": hashlib.sha256(b).hexdigest(),
                                   "bytes": len(b)}
-    for name, api in BTLOGS:
-        h = btlog_head(api)
+    for name, host, url in BTLOGS:
+        h = btlog_head(url, host)
         if h:
             out["btlogs"][name] = h
     return out
@@ -139,9 +156,10 @@ def main():
         "observed_at": now,
         "artifacts": obs["artifacts"],
         "btlogs": obs["btlogs"],
-        "observed": {"via": "https://f-droid.org/repo/ and api.github.com",
-                     "note": "digest of the index as served, paired with the head of "
-                             "the publisher's own transparency log at the same moment"},
+        "observed": {"via": "https://f-droid.org/repo/, api.github.com, gitlab.com/api/v4",
+                     "note": "digest of the f-droid.org index as served, paired with the "
+                             "heads of four publisher-run git transparency logs at the "
+                             "same moment; the first of those is the one covering this index"},
     }
     blob = jcs.encode(leaf)
     print("\nleaf %d bytes" % len(blob))
