@@ -45,8 +45,11 @@ them.
   `Infinity`.
 - **Duplicate object keys are MALFORMED.** Python and Go both take last-wins, so
   a divergence here is invisible in testing. Two lines of rule remove the class.
-- Numbers are integers in ±2^53. Any fraction or exponent in a key-bearing field
-  is MALFORMED: `{"version":3}` and `{"version":3.0}` must not become one row.
+- Numbers threaten canonicalisation only where the reduction **emits** them.
+  Every field v1 emits is a string or an integer it computes itself, so a float
+  in a claim payload is not a defect: leaf 339 carries `"score": 0.91` and is a
+  perfectly good claim. A future version that emits a leaf's own numbers must
+  restate this rule for the fields it emits, and reject fractions there.
 - A top-level value that is not an object is MALFORMED.
 
 45 leaves in this log are not JSON. They are `public-note:v1`, and they get a
