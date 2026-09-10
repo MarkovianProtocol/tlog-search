@@ -142,3 +142,70 @@ python3 verify_anchors.py --export ./export --headers headers.bin \
 
 It also says nothing about whether the log served the same tree to everyone.
 That is what witness cosignatures are for, and `tlogsearch.py` reports them.
+
+---
+
+# Reducing the log to a table
+
+A log is a sequence, not a database: no keys, no updates, no queries. The usual
+fix is an index, and an index is the operator's word — which is the power the log
+was built to remove, re-entering through the back.
+
+`reduce.py` implements `spec/reduction-v1.md`: a stated function from the leaves
+to a table, keyed on `(issuer, subject)`. Replay the leaves in index order, apply
+it, and you get the same rows anyone else gets, checked against the same cosigned
+root.
+
+```
+python3 reduce.py --export ./export
+python3 reduce.py --export ./export --subject bitcoin-block-957803
+python3 reduce.py --export ./export --table rows.jsonl
+```
+
+Over the live log at 7898 leaves: 6780 rows, 0 malformed, and a `table_sha256`
+that is byte-identical across runs.
+
+An answer is never a bare table. It is the quad:
+
+```
+root             w4EgQfjRRVBy+JSSs8o4H2M0IEMJHeJ0msSDjHhu7Bg=
+tree_size        7898
+reduction_sha256 c5dea0c10a057d5365faac5658a5c6f9a9b0a562e61121333e70173293281d40
+table_sha256     ee4fb4d4cf25b63abe4bf9f7cbea83db450030461198dd70d019fe3579e86be0
+```
+
+`reduction_sha256` is committed in the log itself, as a `reduction-manifest/v1`
+leaf at index 7912, so the interpretation is as auditable as the data. An
+uncommitted reduction is the operator's opinion about the operator's data.
+
+## The key is the pair
+
+Never the subject alone. 1470 of 5165 distinct subject names in this log are
+already claimed by more than one issuer, so a bare-subject key would let anyone
+displace anyone's row by writing later.
+
+So a subject lookup returns every issuer's row for it, and says why:
+
+```
+{"claim_type":"prediction","issuer":"anon38c830fa…","subject":"bitcoin-block-957803",…}
+{"claim_type":"outcome","issuer":"anon9716a032…","subject":"bitcoin-block-957803",…}
+
+2 issuers claim this subject. This is not a tie to be broken;
+the log holds 2 disagreeing claims about it.
+```
+
+## It says when it cannot answer
+
+```
+This result cannot answer a question about absence: 1061 leaves were
+malformed or skipped, and any one of them might have been the row
+you asked for. Hits above are still hits; a miss is not a miss.
+```
+
+That is the whole point, and it is the part no other log index does. Every one of
+them silently drops what it could not parse, and then answers your question as if
+it hadn't.
+
+`corpus/` holds the adversarial cases from the real log, and measures what an
+unwritten rule costs: four defensible readings of "what type is this leaf" type
+between 2950 and 6848 of the same 7898 leaves — a spread of 49.4%.
