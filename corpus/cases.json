@@ -1,0 +1,203 @@
+{
+  "what": "Adversarial cases taken from the live markovianprotocol.com/log, not invented.",
+  "why": "A reduction spec is not defended by careful writing. It is defended by a corpus: two implementations agree when they produce the same output on these, and not before.",
+  "source_root": "w4EgQfjRRVBy+JSSs8o4H2M0IEMJHeJ0msSDjHhu7Bg=",
+  "source_tree_size": 7898,
+  "cases": {
+    "plaintext-notes": {
+      "why": "Not JSON at all. A reduction must give these a declared byte grammar or call them malformed; 'it is obviously a note' is not a rule.",
+      "leaves": [
+        {
+          "index": 7443,
+          "sha256": "3f0aa23d1fb70e2d5aed4b7cdd3b14fb7625ad9e137b549f6e1e00d2e0fa147c",
+          "bytes_b64": "cHVibGljLW5vdGU6djEgc2hhMjU2OjA2YmEyYmQxNzk3M2Q5NzZmMzBjYzRlZTE4YzgzOTkxY2MyNjllYmVkZTBkOGVhYWVmY2FmZTA3ZTcxMjM1YmQgMjAyNi0wOC0xOFQyMTowNjoxM1o="
+        },
+        {
+          "index": 7444,
+          "sha256": "d6ea56e23109ff5d872b2c7a4e901566ca3968689f261b63cd58a93be6f08bfc",
+          "bytes_b64": "cHVibGljLW5vdGU6djEgc2hhMjU2OjA2YmEyYmQxNzk3M2Q5NzZmMzBjYzRlZTE4YzgzOTkxY2MyNjllYmVkZTBkOGVhYWVmY2FmZTA3ZTcxMjM1YmQgMjAyNi0wOC0xOFQyMTowNjoyMlo="
+        },
+        {
+          "index": 7445,
+          "sha256": "ac1a5c26722f80e18beb816e6448ab2ce567d3e574d348d8de3d473e8b9e7ddc",
+          "bytes_b64": "cHVibGljLW5vdGU6djEgc2hhMjU2OjA2YmEyYmQxNzk3M2Q5NzZmMzBjYzRlZTE4YzgzOTkxY2MyNjllYmVkZTBkOGVhYWVmY2FmZTA3ZTcxMjM1YmQgMjAyNi0wOC0xOFQyMTowNjozNVo="
+        },
+        {
+          "index": 7446,
+          "sha256": "162cda71db226c223ba2ac199f5725292c44218757eb944c6af34c051d7f93e6",
+          "bytes_b64": "cHVibGljLW5vdGU6djEgc2hhMjU2OjA2YmEyYmQxNzk3M2Q5NzZmMzBjYzRlZTE4YzgzOTkxY2MyNjllYmVkZTBkOGVhYWVmY2FmZTA3ZTcxMjM1YmQgMjAyNi0wOC0xOFQyMTowNjo0M1o="
+        },
+        {
+          "index": 7447,
+          "sha256": "a428f4c03a2f042930ddff7e3eb2eab3f43b581bb9731d8f3c97d61a1eb9e96c",
+          "bytes_b64": "cHVibGljLW5vdGU6djEgc2hhMjU2OjA2YmEyYmQxNzk3M2Q5NzZmMzBjYzRlZTE4YzgzOTkxY2MyNjllYmVkZTBkOGVhYWVmY2FmZTA3ZTcxMjM1YmQgMjAyNi0wOC0xOFQyMTowNjo1NFo="
+        }
+      ]
+    },
+    "key-rotation": {
+      "why": "Rotation leaf whose issuer is the OLD did. Applied backwards it lets a rotation writer inherit another issuer's rows; it must bind forward only, from indices greater than its own.",
+      "leaves": [
+        {
+          "index": 1728,
+          "sha256": "d23ff4fdcb6ed4aeaaff629d70aad9730e219f474b9089e398cb3488dd98d9c2",
+          "bytes_b64": "eyJjb3JlIjp7ImNsYWltIjp7ImVmZmVjdGl2ZV9hdCI6IjIwMjYtMDctMjBUMjM6MzY6MzNaIiwibmV3X2RpZCI6ImRpZDprZXk6ejZNa2lHdDFKa3p5bjZMOG00Sm15TXd1czNNYTZaeW1vbVVKYjZieE5VS2hyWkF0Iiwib2xkX2RpZCI6ImRpZDprZXk6ejZNa2k0SEVrS1NwUmlUbnBwTFI4S3NaYTFIc0tZVldteWJ0NW53OUFkUUZTNHVYIiwicmVhc29uIjoicHJlY2F1dGlvbmFyeSByb3RhdGlvbjogcGFydGlhbCBwcml2YXRlLWtleSBieXRlcyBleHBvc2VkIGluIGEgbG9jYWwgYnVpbGQgdHJhbnNjcmlwdCAobG9jYWwtb25seSkifSwiY2xhaW1UeXBlIjoiaHR0cHM6Ly9tYXJrb3ZpYW5wcm90b2NvbC5jb20vY2xhaW0va2V5LXJvdGF0aW9uL3YxIiwiaXNzdWVkQXQiOiIyMDI2LTA3LTIwVDIzOjM2OjMzWiIsImlzc3VlciI6ImRpZDprZXk6ejZNa2k0SEVrS1NwUmlUbnBwTFI4S3NaYTFIc0tZVldteWJ0NW53OUFkUUZTNHVYIiwic3ViamVjdCI6eyJkaWdlc3QiOnsic2hhMjU2IjoiMDY5NjJlNDQzYTAwYzNhMmI2NDU2NTRmYTg2MTgxYmE4ZTk2MmVlMTQwZWEwZTg5YzIwZWU3OWFiYjUxM2IzNSJ9LCJuYW1lIjoia2V5LXJvdGF0aW9uOkFkUUZTNHVYLT5OVUtoclpBdCJ9fSwicm90YXRpb25fc2lncyI6eyJuZXciOnsiYWxnIjoiZWQyNTUxOSIsImRpZCI6ImRpZDprZXk6ejZNa2lHdDFKa3p5bjZMOG00Sm15TXd1czNNYTZaeW1vbVVKYjZieE5VS2hyWkF0Iiwic2lnIjoiblZpellBVG55YndtZWFBUHJzTkNBTnl5M2xiVGRFcW1SR0l5RHVNWmNmNWZyRzlrQzVHVmlCZnU1anVQbzk1eG43cm5jU2Fia0djc1M3SnFTQU1qRFE9PSJ9LCJvbGQiOnsiYWxnIjoiZWQyNTUxOSIsImRpZCI6ImRpZDprZXk6ejZNa2k0SEVrS1NwUmlUbnBwTFI4S3NaYTFIc0tZVldteWJ0NW53OUFkUUZTNHVYIiwic2lnIjoib3d6YmptNVJRWGROWmdTRjNmUm02RXFab0ltanVQc1pLclhwTFFnVXA5QXM0RDBvNXJtZUFIU0FvbTJScmYxaXpHNnNxeDVTQ0lhOU9idDZwTTJTRFE9PSJ9fX0="
+        }
+      ]
+    },
+    "typed-via-claim_type": {
+      "why": "Claim type reached via claim_type. An implementation that reads only one of these paths differs from one that reads another by thousands of rows.",
+      "leaves": [
+        {
+          "index": 4,
+          "sha256": "617e819866e9847b17d39b25d1f160805301a1391702485fca737854da12d760",
+          "bytes_b64": "eyJjbGFpbV90eXBlIjoidG9vbC1jYWxsIiwiY291bnRlcnNpZyI6eyJzaWciOiIzYjBiZjI0ZjUyZmZkNTNmNWM5MDE4MWQwNjFkY2VmZGQwZDI3YWE0ZDFjNDI2NGExODA5ZGQ1YmY5NjE0ODA1ZTRlZmEyM2RmN2Q1ZWM4NGY4ZGNmOWRhNGQ3NTIxNzIzMjcxOTI4ZGY0NThhZmVkOTFkNTRlN2I0OWU0YTMwNyIsInNpZ25lciI6IjIxNTJmOGQxOWI3OTFkMjQ0NTMyNDJlMTVmMmVhYjZjYjdjZmZhN2I2YTVlZDMwMDk3OTYwZTA2OTg4MWRiMTIifSwiZGF0YV9oYXNoIjoiMGNkNDRmNWYyMDE4YTJkNTg3ZTgyNjlmNDM4OTE0ZmM5OTZkZGQ5MWUwNTkxOWUwNGNkN2IzNGRmODY4NTU3ZiIsImlzc3VlciI6ImFub244NmVkMzE2Y2JjZGI1ZDI3ODg5ODVmN2M3MzUyZTRmMyIsIm1lcmtsZV9yb290IjoiMzU1NjE5YzljOWIwZDJmODYzN2MxZjhlNzMxOTZlNThkYmFjNGI1OWQ0MmY3ZmFhZTY1MTg1ZGIwYzdlZTMwOSIsInNjaGVtYSI6Im1hcmtvdmlhbi1jbGFpbS92MiIsInN1YmplY3QiOiJtY3A6Ly9leGFtcGxlL3NlYXJjaCJ9"
+        },
+        {
+          "index": 5,
+          "sha256": "4f536298006f926b14e17b6197cb915a76b692957cb2f1c8dc4008d6690827cd",
+          "bytes_b64": "eyJjbGFpbV90eXBlIjoicHJlZGljdGlvbiIsImRhdGFfaGFzaCI6IjU0NzQ1NTdkNDA3ZmZlN2Q2Mjg2NzA4YzgzNWE4MGNhYmQ5NDJiYTZmNmQzNDc1OWNjMjlkNmRlZjkxMmI3OTYiLCJpc3N1ZXIiOiJhbm9uMzhjODMwZmFkNDU3Mzg4Y2E4ZmFhNjA1MzUwNjEyYzMiLCJtZXJrbGVfcm9vdCI6IjMzYjVkNGQxZThkYjQyNjhlNWJkNTkyODU2ODA4ZGZjM2FlOTEzOTNjMDY0ZjQxNGE3OWQ2ODczZTMzMzUwOGYiLCJzY2hlbWEiOiJtYXJrb3ZpYW4tY2xhaW0vdjIiLCJzdWJqZWN0IjoiYml0Y29pbi1ibG9jay05NTc4MDMifQ=="
+        },
+        {
+          "index": 6,
+          "sha256": "60febd9fb4e77ebaea054bef6ca642f67367ddaa97c2c35681086864c9f43590",
+          "bytes_b64": "eyJjbGFpbV90eXBlIjoicHJlZGljdGlvbiIsImRhdGFfaGFzaCI6ImQ5M2IyOTQ3YTZlZmU4ZDA4ZDhiZmMzYjc4Y2ZhMGExMmMyNjA0MTQxNDFhMzk1ZWE5Y2RiZjU3NWUxM2I1N2EiLCJpc3N1ZXIiOiJhbm9uZTNiZmVhYWE2YThlM2VjM2FlNmY1NzZhNTkwZjBhODUiLCJtZXJrbGVfcm9vdCI6IjI1NzhjNjgwZDA4ZjI1ZjBhMzJmNzU4MTM5N2UyMGMwYmUyMDAxMThmNmExMTBmNWNkMzIzODg3MGQwYTgwYjQiLCJzY2hlbWEiOiJtYXJrb3ZpYW4tY2xhaW0vdjIiLCJzdWJqZWN0IjoiYml0Y29pbi1ibG9jay05NTc4MDUifQ=="
+        }
+      ]
+    },
+    "typed-via-claimType": {
+      "why": "Claim type reached via claimType. An implementation that reads only one of these paths differs from one that reads another by thousands of rows.",
+      "leaves": [
+        {
+          "index": 327,
+          "sha256": "b440fecf7c1fadaba350b8802d2fdf34d522fea75402ad56ae843a9e2938a182",
+          "bytes_b64": "eyJjbGFpbSI6eyJhcnRpZmFjdCI6Im1hcmtvdmlhbi9jbGFpbS9TUEVDLm1kIiwic3RhdGVtZW50IjoiRmlyc3QgdHlwZWQgY2xhaW0tbGVhZiByb3V0ZWQgaW50byB0aGUgd2l0bmVzc2VkIEMyU1AgbG9nLiJ9LCJjbGFpbVR5cGUiOiJodHRwczovL21hcmtvdmlhbnByb3RvY29sLmNvbS9jbGFpbS9yZWNvcmQtaW50ZWdyaXR5L3YxIiwiaXNzdWVkQXQiOiIyMDI2LTA3LTE1VDA3OjE0OjMyWiIsImlzc3VlciI6ImRpZDpwa2g6ZWlwMTU1OjE6MHg1OTE5NWMyNDM2ZDFjNTlmMTliNWFhNWM4YjdiMmYwMDAwMDAwMDAwIiwic3ViamVjdCI6eyJkaWdlc3QiOnsic2hhMjU2IjoiY2YyZDM1NTI2ZmYyMzY3NzNjYjIwOTkyMGM3ZmE0Y2E4YzI4ZDQxNTQ0NzAxYTVkNGJiMjUxMjdlYmFjMGYwZCJ9LCJuYW1lIjoibWFya292aWFuL2NsYWltL1NQRUMubWQifX0="
+        },
+        {
+          "index": 335,
+          "sha256": "648838c82b21d1af3145d8ca1d4b28f048404b43e445e3a7c89aa3143569d79c",
+          "bytes_b64": "eyJjbGFpbSI6eyJkZXJpdmVzRnJvbSI6Miwic3VtbWFyeSI6ImRlcml2ZXMgZnJvbSB0aGUgdHlwZWQgbGVhZiAoMzI3KSBhbmQgdGhlIGNvdW50ZXJzaWduZWQgbGVhZiAoMzM0KSJ9LCJjbGFpbVR5cGUiOiJodHRwczovL21hcmtvdmlhbnByb3RvY29sLmNvbS9jbGFpbS90cmFjZS92MSIsImlzc3VlZEF0IjoiMjAyNi0wNy0xNVQwODoxMjozOVoiLCJpc3N1ZXIiOiJkaWQ6cGtoOmVpcDE1NToxOjB4NTkxOTVjMjQzNmQxYzU5ZjE5YjVhYTVjOGI3YjJmMDAwMDAwMDAwMCIsInByaW9yIjpbImI0NDBmZWNmN2MxZmFkYWJhMzUwYjg4MDJkMmZkZjM0ZDUyMmZlYTc1NDAyYWQ1NmFlODQzYTllMjkzOGExODIiLCI2YmI2YWQ4ZWVjMzNmNTBjZDY4ZmE5N2Q1M2YxZDczMjZhMzA2OGYxOTAzNDAzZTMyYzliNzhhYjY0NGZkNzIzIl0sInN1YmplY3QiOnsiZGlnZXN0Ijp7InNoYTI1NiI6ImYxODY0MTE0NWUzY2YzNjhmZTMyMGRmMDQxOTg1YWU5OTU3OWE4YWZiOWEyZmYwMzRhOGY4YjBmNGE5M2U2ZTQifSwibmFtZSI6InRyYWNlLW5vZGUifX0="
+        },
+        {
+          "index": 336,
+          "sha256": "4f266ece6a58278e971d80350d682972cbae0d95f2d54edc572e89821f243074",
+          "bytes_b64": "eyJjbGFpbSI6eyJkZXJpdmVzRnJvbSI6MSwic3VtbWFyeSI6ImRlcml2ZXMgZnJvbSB0cmFjZSBub2RlIFAifSwiY2xhaW1UeXBlIjoiaHR0cHM6Ly9tYXJrb3ZpYW5wcm90b2NvbC5jb20vY2xhaW0vdHJhY2UvdjEiLCJpc3N1ZWRBdCI6IjIwMjYtMDctMTVUMDg6MTM6MTVaIiwiaXNzdWVyIjoiZGlkOnBraDplaXAxNTU6MToweDU5MTk1YzI0MzZkMWM1OWYxOWI1YWE1YzhiN2IyZjAwMDAwMDAwMDAiLCJwcmlvciI6WyI2NDg4MzhjODJiMjFkMWFmMzE0NWQ4Y2ExZDRiMjhmMDQ4NDA0YjQzZTQ0NWUzYTdjODlhYTMxNDM1NjlkNzljIl0sInN1YmplY3QiOnsiZGlnZXN0Ijp7InNoYTI1NiI6IjEyNzNkYTA5ZGQ1MjYxM2QwM2E0ZTZiYjgyM2M2MzY4NDQwY2RiMWE3N2Q3NmJmMjRjM2VmMzEwMTlmNTJhYmIifSwibmFtZSI6InRyYWNlLW5vZGUifX0="
+        }
+      ]
+    },
+    "typed-via-core-claimType": {
+      "why": "Claim type reached via core.claimType. An implementation that reads only one of these paths differs from one that reads another by thousands of rows.",
+      "leaves": [
+        {
+          "index": 334,
+          "sha256": "c7cba62bf8caefe9b7a02eb13a5e6e6865c230b033ddc96ebe1d1ababc62b541",
+          "bytes_b64": "eyJjb3JlIjp7ImNsYWltIjp7InN1bW1hcnkiOiJSZWZlcmVuY2UgY291bnRlcnNpZ25lZCBsZWFmOyBlbmRvcnNlciBrZXkgaGVsZCBieSB0aGUgcHJvdG9jb2wgZm9yIGVuZC10by1lbmQgcGlwZWxpbmUgdmFsaWRhdGlvbiwgbm90IGFuIGluZGVwZW5kZW50IGNvdW50ZXJwYXJ0eS4ifSwiY2xhaW1UeXBlIjoiaHR0cHM6Ly9tYXJrb3ZpYW5wcm90b2NvbC5jb20vY2xhaW0vY291bnRlcnNpZ25lZC1yZXN1bHQvdjEiLCJpc3N1ZWRBdCI6IjIwMjYtMDctMTVUMDg6MDE6MzJaIiwiaXNzdWVyIjoiZGlkOnBraDplaXAxNTU6MToweDU5MTk1YzI0MzZkMWM1OWYxOWI1YWE1YzhiN2IyZjAwMDAwMDAwMDAiLCJzdWJqZWN0Ijp7ImRpZ2VzdCI6eyJzaGEyNTYiOiI2Mjk2MDFiNDEzMTdlYmZmOGYzMzdkODc1ZmFlY2IwZGQwZTE4MDA0MDllN2U5ZTA2ZDIwYzVjNGUwMzFhZjM2In0sIm5hbWUiOiJjb3VudGVyc2lnbi1waXBlbGluZS12MSJ9fSwiY291bnRlcnNpZyI6eyJhbGciOiJlZDI1NTE5IiwiZW5kb3JzZXIiOiJkaWQ6a2V5Ono2TWttcno0UGNtaUxDWXFqWDZtWEpYMlZqSmtmeGZoa3RpVktOZjR2SjVaRVVKcSIsInNpZyI6ImRRajM2VGlQRkgwdGdTem9nWjJCQ3dxRlNWQkJibGtRRDdtd050THJPRkpoVmNLUmZPSzl6aTJEYUUwb2RHZDhMT3JiRXhuYzRmRE1kU2ZudmI5V0RnPT0ifX0="
+        },
+        {
+          "index": 339,
+          "sha256": "5ebda4ec1a6f40b56c10dce499726ff7ba187ed8ae2fc9212718e335ed732e10",
+          "bytes_b64": "eyJjb3JlIjp7ImNsYWltIjp7InNjb3JlIjowLjkxfSwiY2xhaW1UeXBlIjoiaHR0cHM6Ly9tYXJrb3ZpYW5wcm90b2NvbC5jb20vY2xhaW0vY291bnRlcnNpZ25lZC1yZXN1bHQvdjEiLCJpc3N1ZWRBdCI6IjIwMjYtMDctMTVUMDg6MDA6MDBaIiwiaXNzdWVyIjoiZGlkOnBraDplaXAxNTU6MToweDU5MTk1YzI0MzZkMWM1OWYxOWI1YWE1YzhiN2IyZjAwMDAwMDAwMDAiLCJzdWJqZWN0Ijp7ImRpZ2VzdCI6eyJzaGEyNTYiOiI3ZTYzYzhjNzZkMjkzYmQ4ZDYzYTUyYzA5YTFmYzZkMTg0OTJjZTY4N2Q1NGVhNjA2YWJmNjE4MTk0ZTE2Y2JmIn0sIm5hbWUiOiJyZXN1bHQteCJ9fSwiY291bnRlcnNpZyI6eyJhbGciOiJlZDI1NTE5IiwiZW5kb3JzZXIiOiJkaWQ6a2V5Ono2TWt0Q21DWFFpQ011d1RuSm9EcjJ6bUpyMmRoN0dId0Vzc3hwanlYSjI5clVxNiIsInNpZyI6Im9wQ21VNldmVEhQRzNmZEc3Z2V0MVEzcXVyei9OcFU5aCs3bHh3ZGcrUGh1OGRoQlVKNW5oQ0JhY25VeGp1TWlCNGlnRTY3aDJ1QzJRcURVcW5mbkN3PT0ifX0="
+        },
+        {
+          "index": 691,
+          "sha256": "0e3784c87330cf26a102fd84617db95460e82fcbc71028af84e906c19e938390",
+          "bytes_b64": "eyJjb3JlIjp7ImNsYWltIjp7ImRvbWFpbiI6Im1hcmtvdmlhbnByb3RvY29sLmNvbSIsImtleSI6ImJoV3NGMUQ4Tmk3STc0QnR4VFZhYklMUXRsY2xpa3RuMU1Fc0N2ZlVUUjQ9Iiwic3VtbWFyeSI6IkVuZG9yc2VtZW50LWtleSByZWdpc3RyYXRpb24sIHNlbGYtc2lnbmVkIHRvIHByb3ZlIGtleSBwb3NzZXNzaW9uOyB0aGUgZG9tYWluIGJpbmRpbmcgaXMgY2hlY2tlZCBhZ2FpbnN0IGh0dHBzOi8vbWFya292aWFucHJvdG9jb2wuY29tLy53ZWxsLWtub3duL2RpZC5qc29uIGJ5IGVhY2ggdmVyaWZpZXIgZGlyZWN0bHkuIn0sImNsYWltVHlwZSI6Imh0dHBzOi8vbWFya292aWFucHJvdG9jb2wuY29tL2NsYWltL2VuZG9yc2VyLXJlZ2lzdHJhdGlvbi92MSIsImlzc3VlZEF0IjoiMjAyNi0wNy0xN1QxNjozNzo1MloiLCJpc3N1ZXIiOiJkaWQ6d2ViOm1hcmtvdmlhbnByb3RvY29sLmNvbSIsInN1YmplY3QiOnsiZGlnZXN0Ijp7InNoYTI1NiI6IjZhODA1MzU5ZDllYWZlZDM4ZmQ5OTczNjIzODI3YTFlZGI4ZDhjOTA3NzRjNDhkYmE4OGRhMmMzOTBiYzE1YzkifSwibmFtZSI6ImVuZG9yc2VyLXJlZ2lzdHJhdGlvbjptYXJrb3ZpYW5wcm90b2NvbC5jb20iLCJ1cmkiOiJodHRwczovL21hcmtvdmlhbnByb3RvY29sLmNvbS8ud2VsbC1rbm93bi9kaWQuanNvbiJ9fSwiY291bnRlcnNpZyI6eyJhbGciOiJlZDI1NTE5IiwiZW5kb3JzZXIiOiJkaWQ6d2ViOm1hcmtvdmlhbnByb3RvY29sLmNvbSIsInB1YiI6ImJoV3NGMUQ4Tmk3STc0QnR4VFZhYklMUXRsY2xpa3RuMU1Fc0N2ZlVUUjQ9Iiwic2lnIjoidjgxNmthTHF6cm01THhqNUlLb3c2VVRsUm5ZNzFLbjh5b2FObm9NbTM5eHRGR1k3YjkwdEYyYzBqVnB5azNTdW1qV1RjL0VlZkpvYU1uT2Y5aUJFRHc9PSJ9fQ=="
+        }
+      ]
+    },
+    "typed-via-kind": {
+      "why": "Claim type reached via kind. An implementation that reads only one of these paths differs from one that reads another by thousands of rows.",
+      "leaves": [
+        {
+          "index": 1,
+          "sha256": "3478ea7f7477602d31d3580742fa19686625d636cf47e5290577247199ec6278",
+          "bytes_b64": "eyJraW5kIjoiYW5jaG9yIiwibiI6Mn0="
+        },
+        {
+          "index": 2,
+          "sha256": "16e1a4c67ac796e93d6196332bc9aa114fb58e655a87dbfc26384d9b23737b33",
+          "bytes_b64": "eyJraW5kIjoiYW5jaG9yIiwibiI6M30="
+        }
+      ]
+    },
+    "typed-via-untyped": {
+      "why": "Claim type reached via untyped. An implementation that reads only one of these paths differs from one that reads another by thousands of rows.",
+      "leaves": [
+        {
+          "index": 0,
+          "sha256": "c65767dfaf98f6b3fb439feab33932ebc14fc5a2434f04f4cb65dfdeb2bfaeee",
+          "bytes_b64": "eyJvcmlnaW4iOiJtYXJrb3ZpYW5wcm90b2NvbC5jb20vbG9nIiwicHVycG9zZSI6ImFwcGVuZC1vbmx5IHRyYW5zcGFyZW5jeSBsb2c7IGNoZWNrcG9pbnQgcm9vdHMgYW5jaG9yZWQgdG8gQml0Y29pbiIsImdlbmVzaXMiOnRydWV9"
+        },
+        {
+          "index": 3,
+          "sha256": "2bee53c454700cb5d643f44135add71106beceb78ea8c2ff7d9f20805c1c4219",
+          "bytes_b64": "eyJkYXRhX2hhc2giOiIxZGU2MDQ1NzY3ZWQ5Yjc2YTFmYjE3YzJhMzNiOTYwNzk0ZGE1ZTA2M2QxMjFlODE2ZjYxYzY2NWUzMjEwNTcwIiwibWVya2xlX3Jvb3QiOiIyYzcxZmUzMTk1YTQzNWFlMzBjZjFiY2M4NWFkY2JjMjZkMDk2ZjgyYzdjNjM2ZGYyYWJkNjkzNDA4MDk3YzJiIiwic2NoZW1hIjoibWFya292aWFuLWNsYWltL3YyIiwid2FsbGV0IjoiYW5vbjZmZWJhNjEzYzA0YjE0YmE1Y2ZkYzZhZDUxNDVlYjg1In0="
+        },
+        {
+          "index": 58,
+          "sha256": "dd8452821d3397d2b6421bc9804f44598c4d2937d772cd6c151736eb01e70539",
+          "bytes_b64": "eyJkYXRhX2hhc2giOiIwMzBhMTBlN2E0OTNjYTEwNzdmMjcyZGE2OTIxMmY5YWEzNjRlYWJhYThkNzY2MDJhYWIyYTRkYjdiZWNmY2M5IiwiaXNzdWVyIjoiYW5vbjA0ZDFmYTAyMGE2ZjUwMmFkYjI0YmNiYjY0NGU4NWMyIiwibWVya2xlX3Jvb3QiOiIxNTU2Y2YwYTBhODNjMTIxOTMwNDNmZWZjMWY4NzkyNDM2YzFjNGNlMzQyZjZjOThhNWY2ZGYxZjZkZWQ3MzU0Iiwic2NoZW1hIjoibWFya292aWFuLWNsYWltL3YyIn0="
+        }
+      ]
+    },
+    "subject-NoneType": {
+      "why": "subject is NoneType here; generic key extraction is impossible.",
+      "leaves": [
+        {
+          "index": 0,
+          "sha256": "c65767dfaf98f6b3fb439feab33932ebc14fc5a2434f04f4cb65dfdeb2bfaeee",
+          "bytes_b64": "eyJvcmlnaW4iOiJtYXJrb3ZpYW5wcm90b2NvbC5jb20vbG9nIiwicHVycG9zZSI6ImFwcGVuZC1vbmx5IHRyYW5zcGFyZW5jeSBsb2c7IGNoZWNrcG9pbnQgcm9vdHMgYW5jaG9yZWQgdG8gQml0Y29pbiIsImdlbmVzaXMiOnRydWV9"
+        },
+        {
+          "index": 1,
+          "sha256": "3478ea7f7477602d31d3580742fa19686625d636cf47e5290577247199ec6278",
+          "bytes_b64": "eyJraW5kIjoiYW5jaG9yIiwibiI6Mn0="
+        },
+        {
+          "index": 2,
+          "sha256": "16e1a4c67ac796e93d6196332bc9aa114fb58e655a87dbfc26384d9b23737b33",
+          "bytes_b64": "eyJraW5kIjoiYW5jaG9yIiwibiI6M30="
+        }
+      ]
+    },
+    "subject-str": {
+      "why": "subject is str here; generic key extraction is impossible.",
+      "leaves": [
+        {
+          "index": 4,
+          "sha256": "617e819866e9847b17d39b25d1f160805301a1391702485fca737854da12d760",
+          "bytes_b64": "eyJjbGFpbV90eXBlIjoidG9vbC1jYWxsIiwiY291bnRlcnNpZyI6eyJzaWciOiIzYjBiZjI0ZjUyZmZkNTNmNWM5MDE4MWQwNjFkY2VmZGQwZDI3YWE0ZDFjNDI2NGExODA5ZGQ1YmY5NjE0ODA1ZTRlZmEyM2RmN2Q1ZWM4NGY4ZGNmOWRhNGQ3NTIxNzIzMjcxOTI4ZGY0NThhZmVkOTFkNTRlN2I0OWU0YTMwNyIsInNpZ25lciI6IjIxNTJmOGQxOWI3OTFkMjQ0NTMyNDJlMTVmMmVhYjZjYjdjZmZhN2I2YTVlZDMwMDk3OTYwZTA2OTg4MWRiMTIifSwiZGF0YV9oYXNoIjoiMGNkNDRmNWYyMDE4YTJkNTg3ZTgyNjlmNDM4OTE0ZmM5OTZkZGQ5MWUwNTkxOWUwNGNkN2IzNGRmODY4NTU3ZiIsImlzc3VlciI6ImFub244NmVkMzE2Y2JjZGI1ZDI3ODg5ODVmN2M3MzUyZTRmMyIsIm1lcmtsZV9yb290IjoiMzU1NjE5YzljOWIwZDJmODYzN2MxZjhlNzMxOTZlNThkYmFjNGI1OWQ0MmY3ZmFhZTY1MTg1ZGIwYzdlZTMwOSIsInNjaGVtYSI6Im1hcmtvdmlhbi1jbGFpbS92MiIsInN1YmplY3QiOiJtY3A6Ly9leGFtcGxlL3NlYXJjaCJ9"
+        },
+        {
+          "index": 5,
+          "sha256": "4f536298006f926b14e17b6197cb915a76b692957cb2f1c8dc4008d6690827cd",
+          "bytes_b64": "eyJjbGFpbV90eXBlIjoicHJlZGljdGlvbiIsImRhdGFfaGFzaCI6IjU0NzQ1NTdkNDA3ZmZlN2Q2Mjg2NzA4YzgzNWE4MGNhYmQ5NDJiYTZmNmQzNDc1OWNjMjlkNmRlZjkxMmI3OTYiLCJpc3N1ZXIiOiJhbm9uMzhjODMwZmFkNDU3Mzg4Y2E4ZmFhNjA1MzUwNjEyYzMiLCJtZXJrbGVfcm9vdCI6IjMzYjVkNGQxZThkYjQyNjhlNWJkNTkyODU2ODA4ZGZjM2FlOTEzOTNjMDY0ZjQxNGE3OWQ2ODczZTMzMzUwOGYiLCJzY2hlbWEiOiJtYXJrb3ZpYW4tY2xhaW0vdjIiLCJzdWJqZWN0IjoiYml0Y29pbi1ibG9jay05NTc4MDMifQ=="
+        },
+        {
+          "index": 6,
+          "sha256": "60febd9fb4e77ebaea054bef6ca642f67367ddaa97c2c35681086864c9f43590",
+          "bytes_b64": "eyJjbGFpbV90eXBlIjoicHJlZGljdGlvbiIsImRhdGFfaGFzaCI6ImQ5M2IyOTQ3YTZlZmU4ZDA4ZDhiZmMzYjc4Y2ZhMGExMmMyNjA0MTQxNDFhMzk1ZWE5Y2RiZjU3NWUxM2I1N2EiLCJpc3N1ZXIiOiJhbm9uZTNiZmVhYWE2YThlM2VjM2FlNmY1NzZhNTkwZjBhODUiLCJtZXJrbGVfcm9vdCI6IjI1NzhjNjgwZDA4ZjI1ZjBhMzJmNzU4MTM5N2UyMGMwYmUyMDAxMThmNmExMTBmNWNkMzIzODg3MGQwYTgwYjQiLCJzY2hlbWEiOiJtYXJrb3ZpYW4tY2xhaW0vdjIiLCJzdWJqZWN0IjoiYml0Y29pbi1ibG9jay05NTc4MDUifQ=="
+        }
+      ]
+    },
+    "subject-dict": {
+      "why": "subject is dict here; generic key extraction is impossible.",
+      "leaves": [
+        {
+          "index": 327,
+          "sha256": "b440fecf7c1fadaba350b8802d2fdf34d522fea75402ad56ae843a9e2938a182",
+          "bytes_b64": "eyJjbGFpbSI6eyJhcnRpZmFjdCI6Im1hcmtvdmlhbi9jbGFpbS9TUEVDLm1kIiwic3RhdGVtZW50IjoiRmlyc3QgdHlwZWQgY2xhaW0tbGVhZiByb3V0ZWQgaW50byB0aGUgd2l0bmVzc2VkIEMyU1AgbG9nLiJ9LCJjbGFpbVR5cGUiOiJodHRwczovL21hcmtvdmlhbnByb3RvY29sLmNvbS9jbGFpbS9yZWNvcmQtaW50ZWdyaXR5L3YxIiwiaXNzdWVkQXQiOiIyMDI2LTA3LTE1VDA3OjE0OjMyWiIsImlzc3VlciI6ImRpZDpwa2g6ZWlwMTU1OjE6MHg1OTE5NWMyNDM2ZDFjNTlmMTliNWFhNWM4YjdiMmYwMDAwMDAwMDAwIiwic3ViamVjdCI6eyJkaWdlc3QiOnsic2hhMjU2IjoiY2YyZDM1NTI2ZmYyMzY3NzNjYjIwOTkyMGM3ZmE0Y2E4YzI4ZDQxNTQ0NzAxYTVkNGJiMjUxMjdlYmFjMGYwZCJ9LCJuYW1lIjoibWFya292aWFuL2NsYWltL1NQRUMubWQifX0="
+        },
+        {
+          "index": 335,
+          "sha256": "648838c82b21d1af3145d8ca1d4b28f048404b43e445e3a7c89aa3143569d79c",
+          "bytes_b64": "eyJjbGFpbSI6eyJkZXJpdmVzRnJvbSI6Miwic3VtbWFyeSI6ImRlcml2ZXMgZnJvbSB0aGUgdHlwZWQgbGVhZiAoMzI3KSBhbmQgdGhlIGNvdW50ZXJzaWduZWQgbGVhZiAoMzM0KSJ9LCJjbGFpbVR5cGUiOiJodHRwczovL21hcmtvdmlhbnByb3RvY29sLmNvbS9jbGFpbS90cmFjZS92MSIsImlzc3VlZEF0IjoiMjAyNi0wNy0xNVQwODoxMjozOVoiLCJpc3N1ZXIiOiJkaWQ6cGtoOmVpcDE1NToxOjB4NTkxOTVjMjQzNmQxYzU5ZjE5YjVhYTVjOGI3YjJmMDAwMDAwMDAwMCIsInByaW9yIjpbImI0NDBmZWNmN2MxZmFkYWJhMzUwYjg4MDJkMmZkZjM0ZDUyMmZlYTc1NDAyYWQ1NmFlODQzYTllMjkzOGExODIiLCI2YmI2YWQ4ZWVjMzNmNTBjZDY4ZmE5N2Q1M2YxZDczMjZhMzA2OGYxOTAzNDAzZTMyYzliNzhhYjY0NGZkNzIzIl0sInN1YmplY3QiOnsiZGlnZXN0Ijp7InNoYTI1NiI6ImYxODY0MTE0NWUzY2YzNjhmZTMyMGRmMDQxOTg1YWU5OTU3OWE4YWZiOWEyZmYwMzRhOGY4YjBmNGE5M2U2ZTQifSwibmFtZSI6InRyYWNlLW5vZGUifX0="
+        },
+        {
+          "index": 336,
+          "sha256": "4f266ece6a58278e971d80350d682972cbae0d95f2d54edc572e89821f243074",
+          "bytes_b64": "eyJjbGFpbSI6eyJkZXJpdmVzRnJvbSI6MSwic3VtbWFyeSI6ImRlcml2ZXMgZnJvbSB0cmFjZSBub2RlIFAifSwiY2xhaW1UeXBlIjoiaHR0cHM6Ly9tYXJrb3ZpYW5wcm90b2NvbC5jb20vY2xhaW0vdHJhY2UvdjEiLCJpc3N1ZWRBdCI6IjIwMjYtMDctMTVUMDg6MTM6MTVaIiwiaXNzdWVyIjoiZGlkOnBraDplaXAxNTU6MToweDU5MTk1YzI0MzZkMWM1OWYxOWI1YWE1YzhiN2IyZjAwMDAwMDAwMDAiLCJwcmlvciI6WyI2NDg4MzhjODJiMjFkMWFmMzE0NWQ4Y2ExZDRiMjhmMDQ4NDA0YjQzZTQ0NWUzYTdjODlhYTMxNDM1NjlkNzljIl0sInN1YmplY3QiOnsiZGlnZXN0Ijp7InNoYTI1NiI6IjEyNzNkYTA5ZGQ1MjYxM2QwM2E0ZTZiYjgyM2M2MzY4NDQwY2RiMWE3N2Q3NmJmMjRjM2VmMzEwMTlmNTJhYmIifSwibmFtZSI6InRyYWNlLW5vZGUifX0="
+        }
+      ]
+    }
+  }
+}
