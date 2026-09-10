@@ -1,3 +1,25 @@
+# tlog-search
+
+Tools for a transparency log, all stdlib-only Python, no dependencies and no
+network unless a line below says otherwise.
+
+| | |
+|---|---|
+| `tlogsearch.py` | Search an export. A miss is a claim, not an empty result. |
+| `reduce.py` | Reduce the log to a table by a published function. Point-in-time answers, and receipts. |
+| `verify_receipt.py` | Check one row from the receipt alone — inclusion, root, cosignatures, and that the row re-derives. |
+| `subtree.py` | Subtree hashes and consistency proofs (MTC draft §4.1, §4.4). Byte-identical to torchwood. |
+| `mirror_client.py` | Feed a log to a `c2sp.org/tlog-mirror` mirror. |
+| `ots.py` | Replay an OpenTimestamps proof. |
+| `verify_anchors.py` | Check a bundle's Bitcoin anchors against shipped headers, offline. |
+| `fetch_headers.py` | Collect those headers. The only part that uses the network. |
+| `git_attest.py` | Record a commit and its signature status from a local clone. |
+| `attest_repos.py` | Record what a git host serves for every repo in an org. |
+| `hf_attest.py` | Record what Hugging Face serves for a model. |
+| `hf_watch.py` | Watch a model set daily: one digest leaf per run, a detail leaf per change. |
+
+---
+
 # tlogsearch
 
 Search a transparency log, and get an answer bound to a root you re-derive.
@@ -213,3 +235,56 @@ it hadn't.
 `corpus/` holds the adversarial cases from the real log, and measures what an
 unwritten rule costs: four defensible readings of "what type is this leaf" type
 between 2950 and 6848 of the same 7898 leaves — a spread of 49.4%.
+
+
+---
+
+# Recording what a host said
+
+A signature says who. It does not say when — commit dates are chosen by whoever
+makes the commit, and the signature covers the values they chose — and it does
+not say this is the only version published, because a signed commit can be
+force-pushed away and replaced by another signed commit with nothing in either
+signature revealing it.
+
+Neither is fixed by signing harder. Both need a record kept where the committer
+has no control, at a time they do not pick.
+
+```
+python3 git_attest.py --repo . --rev HEAD
+python3 attest_repos.py --org YOURORG --out leaves/
+python3 hf_attest.py --models models.txt --out leaves/
+python3 hf_watch.py --models models.txt --state state.json --submit
+```
+
+These record what was observed rather than vouching for it. An unverified
+signature, or a model card behind a gate, is a fact worth logging — not a reason
+to refuse.
+
+## Why it matters, with a real case
+
+```
+leaf 7942  git:github.com/MarkovianProtocol/tlog-search@2af8946c  unknown_key
+leaf 7944  git:github.com/MarkovianProtocol/tlog-search@2af8946c  valid
+```
+
+Same commit, same tree, same parents, same dates. A signing key was registered
+between the two observations, and the host's verdict about an immutable object
+moved with it. Ask today and you get the second answer, with nothing indicating
+there was a first.
+
+Nobody staged that. It happened while setting up commit signing on this repo.
+
+## Watching without burying the log
+
+`hf_watch.py` writes one digest leaf per run — the count, the failures, and a
+hash over every watched model's state — and a detail leaf only for a model whose
+head, card digest, or gated state moved.
+
+Logging everything every run would add thousands of identical leaves a year and
+bury the few that matter. Logging only changes would make silence meaningless,
+since a model with no leaf might be unchanged or might never have been looked
+at. This way a quiet day is on the record and a change always has its own leaf.
+
+The watched list is in `models.txt`, published so the selection cannot be said to
+have been made after the fact.
