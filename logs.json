@@ -1,0 +1,29 @@
+{
+  "_note": "External logs and artifacts observed daily. Each entry is public, and each subject is a party who keeps a hash log in storage they control themselves. Recording them elsewhere is the thing their own docs say is missing.",
+  "subjects": [
+    {
+      "name": "f-droid.org",
+      "why": "Its own btlog README calls the git repo an imperfect append-only storage mechanism.",
+      "artifacts": [
+        ["f-droid.org/repo/entry.jar", "https://f-droid.org/repo/entry.jar"],
+        ["f-droid.org/repo/index-v2.json", "https://f-droid.org/repo/index-v2.json"]
+      ],
+      "logs": [
+        ["fdroid/f-droid.org-transparency-log", "gitlab", "https://gitlab.com/api/v4/projects/fdroid%2Ff-droid.org-transparency-log/repository/commits?per_page=1"],
+        ["guardianproject/binary_transparency_log", "github", "https://api.github.com/repos/guardianproject/binary_transparency_log/commits?per_page=1"],
+        ["f-droid/android-sdk-transparency-log", "github", "https://api.github.com/repos/f-droid/android-sdk-transparency-log/commits?per_page=1"],
+        ["f-droid/gradle-transparency-log", "github", "https://api.github.com/repos/f-droid/gradle-transparency-log/commits?per_page=1"]
+      ]
+    },
+    {
+      "name": "dralvia.tech",
+      "why": "Their README: 'Does not prove: that this repository is complete. A force push can remove anchors from here... If you care, clone this repository regularly.' This is that, on a schedule.",
+      "artifacts": [
+        ["dralvia.tech/transparency-log/checkpoint", "https://dralvia.tech/api/public/transparency-log/checkpoint"]
+      ],
+      "logs": [
+        ["Dralvia/transparency-log", "github", "https://api.github.com/repos/Dralvia/transparency-log/commits?per_page=1"]
+      ]
+    }
+  ]
+}
