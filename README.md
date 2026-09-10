@@ -174,9 +174,13 @@ reduction_sha256 c5dea0c10a057d5365faac5658a5c6f9a9b0a562e61121333e70173293281d4
 table_sha256     ee4fb4d4cf25b63abe4bf9f7cbea83db450030461198dd70d019fe3579e86be0
 ```
 
-`reduction_sha256` is committed in the log itself, as a `reduction-manifest/v1`
-leaf at index 7912, so the interpretation is as auditable as the data. An
-uncommitted reduction is the operator's opinion about the operator's data.
+`reduction_sha256` goes in the log itself, as a `reduction-manifest/v1` leaf, so
+the interpretation is as auditable as the data. An uncommitted reduction is the
+operator's opinion about the operator's data.
+
+For this log that leaf is at index 7912. A manifest counts only once a
+quorum-cosigned checkpoint actually covers its index — being appended is not the
+same as being witnessed, and the spec refuses on the difference.
 
 ## The key is the pair
 
