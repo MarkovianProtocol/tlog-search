@@ -55,17 +55,30 @@ BTLOGS = [
 ]
 
 
-def fetch(url):
+def fetch(url, expect_length=True):
+    """Read the whole body, and refuse a short one.
+
+    index-v2.json is ~59MB. A truncated read hashes cleanly and looks like the
+    publisher changed something, which is exactly the false alarm this tool must
+    not raise -- it happened once during development, against a 25s timeout, and
+    was briefly reported as F-Droid behaviour when it was our own bug.
+    """
     req = urllib.request.Request(url, headers={"User-Agent": "markovian-fdroid-watch/1"})
-    with urllib.request.urlopen(req, timeout=120) as r:
-        return r.read()
+    with urllib.request.urlopen(req, timeout=300) as r:
+        declared = r.headers.get("Content-Length")
+        body = r.read()
+    if expect_length and declared is not None and len(body) != int(declared):
+        raise IOError("short read for %s: got %d of %s bytes"
+                      % (url, len(body), declared))
+    return body
 
 
 def btlog_head(api_path):
     """Unauthenticated GitHub API. 60 requests/hour is ample for a daily run,
     and it keeps this stdlib-only rather than depending on the gh CLI."""
     try:
-        c = json.loads(fetch("https://api.github.com/" + api_path + "?per_page=1"))
+        c = json.loads(fetch("https://api.github.com/" + api_path + "?per_page=1",
+                             expect_length=False))
     except Exception:
         return None
     if not c:
