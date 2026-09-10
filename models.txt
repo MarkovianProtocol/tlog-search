@@ -1,0 +1,20 @@
+# Models watched by hf_watch.py, published so the list cannot be said to have
+# been chosen after the fact.
+#
+# Selection: widely used, from different organisations, spanning open and gated
+# access, across text, speech and image. Chosen for coverage of the failure
+# modes worth recording -- a card that changes, and a repo that becomes
+# unreachable -- not because anything is suspected of any of them.
+#
+# Adding or removing a line changes what the digest leaf covers. The change is
+# visible in this file's own git history, which is itself attested by
+# attest_repos.py, and the digest leaf records the count each run.
+
+openai/whisper-large-v3
+meta-llama/Llama-3.1-8B-Instruct
+mistralai/Mistral-7B-Instruct-v0.3
+google/gemma-2-9b-it
+Qwen/Qwen2.5-7B-Instruct
+deepseek-ai/DeepSeek-R1
+black-forest-labs/FLUX.1-dev
+stabilityai/stable-diffusion-xl-base-1.0
