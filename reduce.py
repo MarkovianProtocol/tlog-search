@@ -28,6 +28,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import jcs
+import subtree as st
 import tlogsearch as ts
 
 SPEC = os.path.join(HERE, "spec", "reduction-v1.md")
@@ -174,6 +175,18 @@ def reduce_leaves(leaves):
     return rows, malformed, skipped, rotations
 
 
+def inclusion_proof(hashes, index):
+    """RFC 6962 audit path for `index` within the tree over `hashes`."""
+    def walk(lo, hi):
+        if hi - lo == 1:
+            return []
+        k = st._split(hi - lo)
+        if index < lo + k:
+            return walk(lo, lo + k) + [st.mth(hashes[lo + k:hi])]
+        return walk(lo + k, hi) + [st.mth(hashes[lo:lo + k])]
+    return walk(0, len(hashes))
+
+
 def serialize(rows):
     """§11: byte-wise sort on the key, one JCS object per line, LF, trailing LF."""
     out = []
@@ -197,11 +210,17 @@ def main():
     ap.add_argument("--lookup", help="issuer to look up")
     ap.add_argument("--subject", help="subject to look up; with --lookup, one row")
     ap.add_argument("--table", help="write the canonical table to this path")
+    ap.add_argument("--as-of", type=int, metavar="N",
+                    help="reduce the tree as it stood at size N, and prove that "
+                         "state consistent with the signed head")
+    ap.add_argument("--receipt", nargs=2, metavar=("ISSUER", "SUBJECT"),
+                    help="emit a portable receipt for one row: the row, its leaf, "
+                         "an inclusion proof, and the cosigned checkpoint")
     a = ap.parse_args()
 
     export = a.export
-    origin, size, root_b64, body, sigs = ts.parse_checkpoint(
-        ts.read_text(export, "checkpoint.txt"))
+    checkpoint_text = ts.read_text(export, "checkpoint.txt")
+    origin, size, root_b64, body, sigs = ts.parse_checkpoint(checkpoint_text)
     leaves = ts.load_leaves(export)
 
     # §12.1-3, the same refusals tlogsearch makes
@@ -232,7 +251,30 @@ def main():
               % (len(v["witnesses"]), v["quorum"]))
         return 2
 
-    rows, malformed, skipped, rotations = reduce_leaves(leaves)
+    as_of = a.as_of if a.as_of is not None else size
+    if as_of > size:
+        print("REFUSING: asked for size %d, the signed checkpoint commits %d."
+              % (as_of, size))
+        return 2
+    hashes = [ts.leaf_hash(d) for _, d in leaves]
+    consistency = None
+    if as_of != size:
+        # An older tree state is only meaningful if it is provably the same log.
+        # SUBTREE_PROOF(0, m, D_n) is the RFC 6962 consistency proof, and this
+        # is the implementation cross-checked against torchwood.
+        root_asof = st.mth(hashes[:as_of])
+        consistency = st.subtree_proof(0, as_of, hashes)
+        if not st.verify_subtree_proof(0, as_of, size, consistency, root_asof,
+                                       base64.b64decode(root_b64)):
+            print("REFUSING: could not prove size %d consistent with the signed "
+                  "head at %d." % (as_of, size))
+            return 2
+        print("as of tree size %d, root %s"
+              % (as_of, base64.b64encode(root_asof).decode()))
+        print("  proven consistent with the signed head at %d, %d hashes"
+              % (size, len(consistency)))
+
+    rows, malformed, skipped, rotations = reduce_leaves(leaves[:as_of])
     blob, table_sha = serialize(rows)
     reduction_sha = spec_digest()
 
@@ -249,6 +291,41 @@ def main():
                                  "applies": "forward only, to indices above each "
                                             "rotation's own index"}) + b"\n")
         print("wrote %s (%d rotation(s))" % (gpath, len(rotations)))
+
+    if a.receipt:
+        iss, sub = a.receipt
+        row = rows.get((iss, sub))
+        if row is None:
+            print("no row for that (issuer, subject) at size %d." % as_of)
+            print("This is a miss, not an absence claim: %d leaves were malformed "
+                  "or skipped." % (len(malformed) + sum(skipped.values()))
+                  if (malformed or skipped) else "")
+            return 2
+        idx = row["last_index"]
+        leaf = dict(leaves)[idx]
+        proof = inclusion_proof(hashes[:as_of], idx)
+        receipt = {
+            "receipt": "markovian-reduction-receipt/v1",
+            "origin": origin,
+            "tree_size": as_of,
+            "root": base64.b64encode(st.mth(hashes[:as_of])).decode(),
+            "reduction_sha256": reduction_sha,
+            "row": row,
+            "leaf_index": idx,
+            "leaf_b64": base64.b64encode(leaf).decode(),
+            "inclusion_proof": [base64.b64encode(h).decode() for h in proof],
+            "checkpoint": checkpoint_text,
+            "consistency_to_head": (
+                [base64.b64encode(h).decode() for h in consistency]
+                if consistency else None),
+            "how_to_check": (
+                "sha256(0x00||leaf_b64) with inclusion_proof recomputes root; "
+                "the row's fields are what reduction_sha256 says to derive from "
+                "that leaf; checkpoint carries the log signature and witness "
+                "cosignatures over root. Nothing here needs the operator."),
+        }
+        print(json.dumps(receipt, indent=2, sort_keys=True))
+        return 0
 
     if a.lookup:
         hits = [r for k, r in rows.items() if k[0] == a.lookup
@@ -274,8 +351,13 @@ def main():
     print("skipped         %s" % (json.dumps(skipped, sort_keys=True) if skipped else "{}"))
     print("rotations seen  %d" % len(rotations))
     print()
-    print("root            %s" % root_b64)
-    print("tree_size       %d" % size)
+    # The quad must describe the tree that was actually answered, not the head.
+    answered_root = (base64.b64encode(st.mth(hashes[:as_of])).decode()
+                     if as_of != size else root_b64)
+    print("root            %s" % answered_root)
+    print("tree_size       %d" % as_of)
+    if as_of != size:
+        print("                (signed head is %d; consistency proven above)" % size)
     print("reduction_sha256 %s" % reduction_sha)
     print("table_sha256    %s" % table_sha)
     print("witnesses       %d (quorum %d)" % (len(v["witnesses"]), v["quorum"]))
