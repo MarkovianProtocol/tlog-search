@@ -3,26 +3,32 @@
 own anchors offline.
 
 This is the only part that touches the network, and it runs at build time, never
-at verification time. It walks backwards from a known block using each header's
-own prev-block field, so the sequence it writes is linked by construction and a
-verifier can re-check that linkage without trusting this script.
+at verification time.
+
+It fetches block metadata ten at a time and rebuilds each 80-byte header from
+it, then checks that the rebuilt header hashes to the block id the server stated
+for it. So the reconstruction is self-checking: a server that lies about any
+header field produces bytes that do not hash to the id it also served. Linkage
+and proof of work are re-checked separately by verify_anchors.py, which trusts
+neither this script nor its source.
 
     python3 fetch_headers.py --from 957788 --to 966218 --out headers.bin
 
 Writes headers.bin (80 bytes per block, ascending) and headers.json (the start
 height and the count).
 
-It is deliberately slow. Public block explorers rate-limit, and a few thousand
-headers fetched flat out earns an HTTP 429 partway through and leaves nothing
-behind. So requests are paced, 429 is backed off separately from other errors,
-and progress is written to disk as it goes: re-running with the same --out
-resumes from what is already there instead of starting again.
+It is deliberately slow. Blockstream caps unauthenticated use at 700 requests
+per hour per IP, which is why one request per block does not work at all: 8431
+blocks is twelve hours and a wall of 429s. Ten blocks per request turns that
+into 844 calls, paced just under the cap. Progress is written to disk as it
+goes, so a throttled or interrupted run resumes from what it already has.
 """
 import argparse
 import hashlib
 import json
 import os
 import sys
+import struct
 import time
 import urllib.error
 import urllib.request
@@ -30,7 +36,8 @@ import urllib.request
 API = "https://blockstream.info/api"
 
 
-DELAY = 0.25          # between requests, so a long run does not look like a flood
+BATCH = 10            # blocks per /blocks/<height> call
+DELAY = 5.2           # 700 requests/hour is the documented unauthenticated cap
 _last = [0.0]
 
 
@@ -59,19 +66,31 @@ def get(path, retries=6):
     raise SystemExit("gave up after %d attempts on %s" % (retries, path))
 
 
-def hash_at(height):
-    return get("/block-height/%d" % height).decode().strip()
-
-
-def header_of(block_hash):
-    raw = bytes.fromhex(get("/block/%s/header" % block_hash).decode().strip())
-    if len(raw) != 80:
-        raise SystemExit("header for %s is %d bytes, expected 80" % (block_hash, len(raw)))
-    return raw
-
-
 def block_hash(header):
     return hashlib.sha256(hashlib.sha256(header).digest()).digest()
+
+
+def build_header(b):
+    """The 80 bytes, rebuilt from the metadata the API returns."""
+    return (struct.pack("<i", b["version"])
+            + bytes.fromhex(b["previousblockhash"])[::-1]
+            + bytes.fromhex(b["merkle_root"])[::-1]
+            + struct.pack("<I", b["timestamp"])
+            + struct.pack("<I", b["bits"])
+            + struct.pack("<I", b["nonce"]))
+
+
+def headers_from(height):
+    """Ten headers, descending from `height`, each checked against its own id."""
+    blocks = json.loads(get("/blocks/%d" % height).decode())
+    out = {}
+    for b in blocks:
+        h = build_header(b)
+        if block_hash(h)[::-1].hex() != b["id"]:
+            raise SystemExit("rebuilt header for %d does not hash to the id served "
+                             "for it -- refusing to write it" % b["height"])
+        out[b["height"]] = h
+    return out
 
 
 def prev_hash(header):
@@ -104,24 +123,20 @@ def main():
                        "headers": {str(k): v.hex() for k, v in have.items()}}, fh)
         os.replace(tmp, progress_path)
 
-    # Walk backwards from the top so each header's prev field names the next one
-    # we ask for. One height lookup for the anchor, then one call per block.
+    # Walk downwards in batches, skipping any run already held.
     height = a.hi
-    while height in have:
-        height -= 1
-    cur = (prev_hash(have[height + 1])[::-1].hex() if height + 1 in have
-           else hash_at(a.hi))
-
     try:
         while height >= a.lo:
-            h = header_of(cur)
-            have[height] = h
-            cur = prev_hash(h)[::-1].hex()
-            height -= 1
-            done = len(have)
-            if done % 250 == 0:
-                flush()
-                print("  %d/%d" % (done, n), flush=True)
+            if height in have:
+                height -= 1
+                continue
+            got = headers_from(height)
+            for hh, raw in got.items():
+                if a.lo <= hh <= a.hi:
+                    have[hh] = raw
+            height = min(got) - 1 if got else height - 1
+            flush()
+            print("  %d/%d" % (len(have), n), flush=True)
     finally:
         flush()
 
