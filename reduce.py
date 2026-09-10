@@ -240,6 +240,15 @@ def main():
         with open(a.table, "wb") as fh:
             fh.write(blob)
         print("wrote %s (%d rows)" % (a.table, len(rows)))
+        # §9.4: the identity graph ships beside the table, so a rotation chain
+        # stays inspectable instead of folded into the rows. Issuers in the
+        # table are literal bytes (§4); nothing here rewrites them.
+        gpath = os.path.splitext(a.table)[0] + ".identity.json"
+        with open(gpath, "wb") as fh:
+            fh.write(jcs.encode({"rotations": rotations,
+                                 "applies": "forward only, to indices above each "
+                                            "rotation's own index"}) + b"\n")
+        print("wrote %s (%d rotation(s))" % (gpath, len(rotations)))
 
     if a.lookup:
         hits = [r for k, r in rows.items() if k[0] == a.lookup
