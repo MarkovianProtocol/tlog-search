@@ -34,7 +34,7 @@ python3 tlogsearch.py --export ./export --field kind=anchor
 
 2 matches in 7898 leaves.
 Searched every leaf committed by root w4EgQfjRRVBy+JSS..., recomputed here from the leaves
-themselves. Log signature verifies. 7 independent witness cosignature(s) verify, quorum 4.
+themselves. Log signature verifies. 7 witness cosignature(s) verify, quorum 4.
 (1 cosignature(s) verify but are not named by the signed trust root, excluded: gblin.digital/witness)
 ```
 
@@ -69,7 +69,7 @@ signature, no witness quorum stated in the trust root, or fewer verified
 independent cosignatures than that quorum.
 
 ```
-REFUSING TO SEARCH: 1 independent witness cosignature(s), quorum is 4.
+REFUSING TO SEARCH: 1 witness cosignature(s), quorum is 4.
 A tree only one party vouches for cannot tell you what is absent from it.
 ```
 

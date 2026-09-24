@@ -216,7 +216,7 @@ def main():
               "there is no threshold to hold this checkpoint to.")
         return 2
     if len(v["witnesses"]) < v["quorum"]:
-        print("REFUSING TO SEARCH: %d independent witness cosignature(s), quorum "
+        print("REFUSING TO SEARCH: %d witness cosignature(s), quorum "
               "is %d." % (len(v["witnesses"]), v["quorum"]))
         print("A tree only one party vouches for cannot tell you what is absent "
               "from it.")
@@ -241,7 +241,7 @@ def main():
     print("%d match%s in %d leaves." % (len(hits), "" if len(hits) == 1 else "es", size))
     print("Searched every leaf committed by root %s, recomputed here from the leaves"
           % root_b64[:16] + "...")
-    print("themselves. Log signature verifies. %d independent witness "
+    print("themselves. Log signature verifies. %d witness "
           "cosignature(s) verify, quorum %d."
           % (len(v["witnesses"]), v["quorum"]))
     if v["advisory"]:

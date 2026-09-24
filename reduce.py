@@ -247,7 +247,7 @@ def main():
         print("REFUSING TO REDUCE: the trust root states no witness quorum.")
         return 2
     if len(v["witnesses"]) < v["quorum"]:
-        print("REFUSING TO REDUCE: %d independent witness cosignature(s), quorum %d."
+        print("REFUSING TO REDUCE: %d witness cosignature(s), quorum %d."
               % (len(v["witnesses"]), v["quorum"]))
         return 2
 
